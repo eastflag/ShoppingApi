@@ -1,0 +1,200 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.auction.co.kr/ServiceInterfaces" xmlns:s1="http://schema.auction.co.kr/Arche.APISvc.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.auction.co.kr/ServiceInterfaces">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">APIv1(Auction) Security Service</wsdl:documentation>
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://www.auction.co.kr/ServiceInterfaces">
+            <s:import namespace="http://schema.auction.co.kr/Arche.APISvc.xsd"/>
+            <s:element name="RequestEncryptionKey">
+                <s:complexType/>
+            </s:element>
+            <s:element name="RequestEncryptionKeyResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestEncryptionKeyResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicket">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="encryptedAuthInfo" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicketResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestTicketResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicketValidityPeriod">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="encryptedTicket" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicketValidityPeriodResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestTicketValidityPeriodResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestApplicationTicket">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="req" type="s1:RequestApplicationTicketRequestT"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestApplicationTicketResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestApplicationTicketResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://schema.auction.co.kr/Arche.APISvc.xsd">
+            <s:complexType name="RequestApplicationTicketRequestT">
+                <s:attribute name="DevID" type="s:string"/>
+                <s:attribute name="AppID" type="s:string"/>
+                <s:attribute name="AppPassword" type="s:string"/>
+            </s:complexType>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="RequestEncryptionKeySoapIn">
+        <wsdl:part name="parameters" element="tns:RequestEncryptionKey"/>
+    </wsdl:message>
+    <wsdl:message name="RequestEncryptionKeySoapOut">
+        <wsdl:part name="parameters" element="tns:RequestEncryptionKeyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketSoapIn">
+        <wsdl:part name="parameters" element="tns:RequestTicket"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketSoapOut">
+        <wsdl:part name="parameters" element="tns:RequestTicketResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketValidityPeriodSoapIn">
+        <wsdl:part name="parameters" element="tns:RequestTicketValidityPeriod"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketValidityPeriodSoapOut">
+        <wsdl:part name="parameters" element="tns:RequestTicketValidityPeriodResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RequestApplicationTicketSoapIn">
+        <wsdl:part name="parameters" element="tns:RequestApplicationTicket"/>
+    </wsdl:message>
+    <wsdl:message name="RequestApplicationTicketSoapOut">
+        <wsdl:part name="parameters" element="tns:RequestApplicationTicketResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="SecurityServiceSoap">
+        <wsdl:operation name="RequestEncryptionKey">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">인증정보 암호화에 사용할 공개키를 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestEncryptionKeySoapIn"/>
+            <wsdl:output message="tns:RequestEncryptionKeySoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicket">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">암호화된 인증파라메터를 전달하고 인증티켓을 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestTicketSoapIn"/>
+            <wsdl:output message="tns:RequestTicketSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicketValidityPeriod">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">암호화된 인증티켓문자열을 전달하고 유효기간을 반환받습니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestTicketValidityPeriodSoapIn"/>
+            <wsdl:output message="tns:RequestTicketValidityPeriodSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RequestApplicationTicket">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">인증파라메터를 전달하고 애플리케이션 인증티켓을 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestApplicationTicketSoapIn"/>
+            <wsdl:output message="tns:RequestApplicationTicketSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SecurityServiceSoap" type="tns:SecurityServiceSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RequestEncryptionKey">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestEncryptionKey" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicket">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestTicket" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicketValidityPeriod">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestTicketValidityPeriod" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestApplicationTicket">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestApplicationTicket" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SecurityServiceSoap12" type="tns:SecurityServiceSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RequestEncryptionKey">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestEncryptionKey" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicket">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestTicket" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicketValidityPeriod">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestTicketValidityPeriod" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestApplicationTicket">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/RequestApplicationTicket" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SecurityService">
+        <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">APIv1(Auction) Security Service</wsdl:documentation>
+        <wsdl:port name="SecurityServiceSoap" binding="tns:SecurityServiceSoap">
+            <soap:address location="https://api.auction.co.kr/APIv1/SecurityService.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="SecurityServiceSoap12" binding="tns:SecurityServiceSoap12">
+            <soap12:address location="https://api.auction.co.kr/APIv1/SecurityService.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,449 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.auction.co.kr/ServiceInterfaces/Security" xmlns:s2="http://www.auction.co.kr/Security" xmlns:s1="http://schema.auction.co.kr/Arche.API.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.auction.co.kr/ServiceInterfaces/Security">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">ArcheSystem(Auction) Security Service</wsdl:documentation>
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://www.auction.co.kr/ServiceInterfaces/Security">
+            <s:import namespace="http://schema.auction.co.kr/Arche.API.xsd"/>
+            <s:element name="RequestEncryptionKey">
+                <s:complexType/>
+            </s:element>
+            <s:element name="RequestEncryptionKeyResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestEncryptionKeyResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicket">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="encryptedAuthInfo" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicketResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestTicketResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestApplicationTicket">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="req" type="s1:RequestApplicationTicketRequestT"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestApplicationTicketResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestApplicationTicketResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ResignTicket">
+                <s:complexType/>
+            </s:element>
+            <s:element name="ResignTicketResponse">
+                <s:complexType/>
+            </s:element>
+            <s:element name="ResignTicketByAuctionCookie">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="auctionCookie" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="ResignTicketByAuctionCookieResponse">
+                <s:complexType/>
+            </s:element>
+            <s:element name="GetAuthenticateCookie">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="AuthenticationCookieString" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetAuthenticateCookieResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetAuthenticateCookieResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestUserTicketByCookie">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="req" type="s1:RequestUserTicketByCookieRequestT"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestUserTicketByCookieResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestUserTicketByCookieResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicketValidityPeriod">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="encryptedTicket" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="RequestTicketValidityPeriodResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="RequestTicketValidityPeriodResult" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="IsCertifyUser">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="MemberID" type="s:string"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="IsCertifyUserResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="IsCertifyUserResult" type="s:boolean"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://schema.auction.co.kr/Arche.API.xsd">
+            <s:complexType name="RequestApplicationTicketRequestT">
+                <s:attribute name="DevID" type="s:string"/>
+                <s:attribute name="AppID" type="s:string"/>
+                <s:attribute name="AppPassword" type="s:string"/>
+            </s:complexType>
+            <s:complexType name="RequestUserTicketByCookieRequestT">
+                <s:attribute name="DevID" type="s:string"/>
+                <s:attribute name="AppID" type="s:string"/>
+                <s:attribute name="AppPassword" type="s:string"/>
+                <s:attribute name="AuctionCookie" type="s:string"/>
+            </s:complexType>
+        </s:schema>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://www.auction.co.kr/Security">
+            <s:element name="EncryptedTicket" type="s2:EncryptedTicketHeader"/>
+            <s:complexType name="EncryptedTicketHeader">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+                </s:sequence>
+                <s:anyAttribute/>
+            </s:complexType>
+            <s:element name="AuthenticationTicket" type="s2:AuthenticationTicket"/>
+            <s:complexType name="AuthenticationTicket">
+                <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string"/>
+                </s:sequence>
+                <s:anyAttribute/>
+            </s:complexType>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="RequestEncryptionKeySoapIn">
+        <wsdl:part name="parameters" element="tns:RequestEncryptionKey"/>
+    </wsdl:message>
+    <wsdl:message name="RequestEncryptionKeySoapOut">
+        <wsdl:part name="parameters" element="tns:RequestEncryptionKeyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketSoapIn">
+        <wsdl:part name="parameters" element="tns:RequestTicket"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketSoapOut">
+        <wsdl:part name="parameters" element="tns:RequestTicketResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RequestApplicationTicketSoapIn">
+        <wsdl:part name="parameters" element="tns:RequestApplicationTicket"/>
+    </wsdl:message>
+    <wsdl:message name="RequestApplicationTicketSoapOut">
+        <wsdl:part name="parameters" element="tns:RequestApplicationTicketResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ResignTicketSoapIn">
+        <wsdl:part name="parameters" element="tns:ResignTicket"/>
+    </wsdl:message>
+    <wsdl:message name="ResignTicketSoapOut">
+        <wsdl:part name="parameters" element="tns:ResignTicketResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ResignTicketEncryptedTicket">
+        <wsdl:part name="EncryptedTicket" element="s2:EncryptedTicket"/>
+    </wsdl:message>
+    <wsdl:message name="ResignTicketByAuctionCookieSoapIn">
+        <wsdl:part name="parameters" element="tns:ResignTicketByAuctionCookie"/>
+    </wsdl:message>
+    <wsdl:message name="ResignTicketByAuctionCookieSoapOut">
+        <wsdl:part name="parameters" element="tns:ResignTicketByAuctionCookieResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ResignTicketByAuctionCookieEncryptedTicket">
+        <wsdl:part name="EncryptedTicket" element="s2:EncryptedTicket"/>
+    </wsdl:message>
+    <wsdl:message name="GetAuthenticateCookieSoapIn">
+        <wsdl:part name="parameters" element="tns:GetAuthenticateCookie"/>
+    </wsdl:message>
+    <wsdl:message name="GetAuthenticateCookieSoapOut">
+        <wsdl:part name="parameters" element="tns:GetAuthenticateCookieResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAuthenticateCookieAuthenticationTicket">
+        <wsdl:part name="AuthenticationTicket" element="s2:AuthenticationTicket"/>
+    </wsdl:message>
+    <wsdl:message name="RequestUserTicketByCookieSoapIn">
+        <wsdl:part name="parameters" element="tns:RequestUserTicketByCookie"/>
+    </wsdl:message>
+    <wsdl:message name="RequestUserTicketByCookieSoapOut">
+        <wsdl:part name="parameters" element="tns:RequestUserTicketByCookieResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketValidityPeriodSoapIn">
+        <wsdl:part name="parameters" element="tns:RequestTicketValidityPeriod"/>
+    </wsdl:message>
+    <wsdl:message name="RequestTicketValidityPeriodSoapOut">
+        <wsdl:part name="parameters" element="tns:RequestTicketValidityPeriodResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IsCertifyUserSoapIn">
+        <wsdl:part name="parameters" element="tns:IsCertifyUser"/>
+    </wsdl:message>
+    <wsdl:message name="IsCertifyUserSoapOut">
+        <wsdl:part name="parameters" element="tns:IsCertifyUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IsCertifyUserEncryptedTicket">
+        <wsdl:part name="EncryptedTicket" element="s2:EncryptedTicket"/>
+    </wsdl:message>
+    <wsdl:portType name="SecurityServiceSoap">
+        <wsdl:operation name="RequestEncryptionKey">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">인증정보 암호화에 사용할 공개키를 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestEncryptionKeySoapIn"/>
+            <wsdl:output message="tns:RequestEncryptionKeySoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicket">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">암호화된 인증정보를 전달하고 인증티켓을 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestTicketSoapIn"/>
+            <wsdl:output message="tns:RequestTicketSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RequestApplicationTicket">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">인증파라메터를 전달하고 애플리케이션 인증티켓을 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestApplicationTicketSoapIn"/>
+            <wsdl:output message="tns:RequestApplicationTicketSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ResignTicket">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">발급받은 인증티켓을 파기하도록 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:ResignTicketSoapIn"/>
+            <wsdl:output message="tns:ResignTicketSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="ResignTicketByAuctionCookie">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">쿠키정보로 발급받은 인증티켓을 파기하도록 요청합니다.</wsdl:documentation>
+            <wsdl:input message="tns:ResignTicketByAuctionCookieSoapIn"/>
+            <wsdl:output message="tns:ResignTicketByAuctionCookieSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAuthenticateCookie">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">[쿠키로부터 옥션등록된 회원의 멤버티켓을 발급(인증 업그레이드후 없어질 함수입니다.)]</wsdl:documentation>
+            <wsdl:input message="tns:GetAuthenticateCookieSoapIn"/>
+            <wsdl:output message="tns:GetAuthenticateCookieSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RequestUserTicketByCookie">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">[쿠키로부터 옥션등록된 회원의 멤버티켓을 발급]</wsdl:documentation>
+            <wsdl:input message="tns:RequestUserTicketByCookieSoapIn"/>
+            <wsdl:output message="tns:RequestUserTicketByCookieSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicketValidityPeriod">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">암호화된 인증티켓문자열을 전달하고 유효기간을 반환받습니다.</wsdl:documentation>
+            <wsdl:input message="tns:RequestTicketValidityPeriodSoapIn"/>
+            <wsdl:output message="tns:RequestTicketValidityPeriodSoapOut"/>
+        </wsdl:operation>
+        <wsdl:operation name="IsCertifyUser">
+            <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">[인증 티켓과 회원의 신원을 확인 합니다.]</wsdl:documentation>
+            <wsdl:input message="tns:IsCertifyUserSoapIn"/>
+            <wsdl:output message="tns:IsCertifyUserSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SecurityServiceSoap" type="tns:SecurityServiceSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RequestEncryptionKey">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestEncryptionKey" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicket">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestTicket" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestApplicationTicket">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestApplicationTicket" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResignTicket">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/ResignTicket" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:ResignTicketEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <soap:header message="tns:ResignTicketEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResignTicketByAuctionCookie">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/ResignTicketByAuctionCookie" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:ResignTicketByAuctionCookieEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <soap:header message="tns:ResignTicketByAuctionCookieEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetAuthenticateCookie">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/GetAuthenticateCookie" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:GetAuthenticateCookieAuthenticationTicket" part="AuthenticationTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestUserTicketByCookie">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestUserTicketByCookie" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicketValidityPeriod">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestTicketValidityPeriod" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="IsCertifyUser">
+            <soap:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/IsCertifyUser" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <soap:header message="tns:IsCertifyUserEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SecurityServiceSoap12" type="tns:SecurityServiceSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RequestEncryptionKey">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestEncryptionKey" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicket">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestTicket" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestApplicationTicket">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestApplicationTicket" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResignTicket">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/ResignTicket" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+                <soap12:header message="tns:ResignTicketEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+                <soap12:header message="tns:ResignTicketEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ResignTicketByAuctionCookie">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/ResignTicketByAuctionCookie" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+                <soap12:header message="tns:ResignTicketByAuctionCookieEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+                <soap12:header message="tns:ResignTicketByAuctionCookieEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetAuthenticateCookie">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/GetAuthenticateCookie" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+                <soap12:header message="tns:GetAuthenticateCookieAuthenticationTicket" part="AuthenticationTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestUserTicketByCookie">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestUserTicketByCookie" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RequestTicketValidityPeriod">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/RequestTicketValidityPeriod" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="IsCertifyUser">
+            <soap12:operation soapAction="http://www.auction.co.kr/ServiceInterfaces/Security/IsCertifyUser" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+                <soap12:header message="tns:IsCertifyUserEncryptedTicket" part="EncryptedTicket" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SecurityService">
+        <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">ArcheSystem(Auction) Security Service</wsdl:documentation>
+        <wsdl:port name="SecurityServiceSoap" binding="tns:SecurityServiceSoap">
+            <soap:address location="https://apitest.auction.co.kr/ArcheSystem/SecurityService.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="SecurityServiceSoap12" binding="tns:SecurityServiceSoap12">
+            <soap12:address location="https://apitest.auction.co.kr/ArcheSystem/SecurityService.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
